@@ -1,3 +1,4 @@
+import Charts from "@/components/ui/Charts";
 import DashboardPanel from "../components/DashboardPanel";
 import LineBreak from "../components/LineBreak";
 import { SalesPanel } from "../components/SalesPanel";
@@ -12,6 +13,9 @@ export default function DashboardPages(){
              <LineBreak title="Live Sales Feed" />
             <div className="pt-4">
                <SalesPanel />
+            </div>
+            <div>
+                <Charts />
             </div>
         </main>
     )

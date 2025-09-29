@@ -151,32 +151,50 @@ export function SalesPanel() {
 
 function PaymentPanel() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-2">
       {progressData.map((item, index) => (
-        <Card key={index} className="bg-white shadow-sm border-0 rounded-2xl">
+        <Card key={index} className="bg-gray-200 shadow-sm border-0 rounded-2xl">
           <CardContent className="p-0">
             <div className="text-center">
               <p className="text-sm font-medium text-gray-600 mb-4">{item.name}</p>
-              <div className="relative w-16 h-16 mx-auto">
-                <ResponsiveContainer width="10z0%" height="100%">
-                  <RadialBarChart
-                cx="50%"
-                cy="50%"
-                innerRadius="60%"
-                outerRadius="90%"
-                data={[{ value: item.value, fill: item.fill }]}
-                startAngle={90}
-                endAngle={-270}
-                >
-                <PolarAngleAxis type="number" domain={[0, 100]} angleAxisId={0} tick={false} />
-                <RadialBar dataKey="value" cornerRadius={10} fill={item.fill} />
-                </RadialBarChart>
 
-                </ResponsiveContainer>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-xs font-bold text-gray-900">{item.value}%</span>
+              {/* Gradient border wrapper */}
+              <div
+                className="relative w-20 h-20 mx-auto rounded-full p-[4px]"
+                style={{
+                  background: `conic-gradient(from 0deg, #4ade80, #22d3ee)`,
+                }}
+              >
+                {/* Inner circle with the chart */}
+                <div className="w-full h-full rounded-full bg-gray-200 flex items-center justify-center">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <RadialBarChart
+                      cx="50%"
+                      cy="50%"
+                      innerRadius="40%"
+                      outerRadius="100%"
+                      data={[{ value: item.value, fill: `url(#grad-${index})` }]}
+                      startAngle={90}
+                      endAngle={-270}
+                    >
+                      <defs>
+                        <linearGradient id={`grad-${index}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor="#4ade80" />
+                          <stop offset="100%" stopColor="#22d3ee" />
+                        </linearGradient>
+                      </defs>
+                      <PolarAngleAxis type="number" domain={[0, 100]} angleAxisId={0} tick={false} />
+                      <RadialBar dataKey="value" cornerRadius={10} fill={`url(#grad-${index})`} />
+                    </RadialBarChart>
+                  </ResponsiveContainer>
+
+                  {/* Center text */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-xs font-bold text-gray-900">{item.value}%</span>
+                  </div>
                 </div>
               </div>
+
               {index === 1 && <p className="text-xs text-gray-500 mt-4">Duration 9h 0m</p>}
             </div>
           </CardContent>
@@ -185,3 +203,7 @@ function PaymentPanel() {
     </div>
   );
 }
+
+
+
+
